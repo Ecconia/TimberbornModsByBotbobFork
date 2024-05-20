@@ -1,0 +1,8 @@
+<Project>
+  <Import Project="properties.common.csproj" />
+  <Import Project="properties.private.csproj" Condition="Exists('properties.private.csproj')"/>
+  <Import Project="process.properties.csproj" />
+  <Import Project="process.references.csproj" />
+  <Import Project="print.vars.csproj" />
+  <Import Project="build.targets.csproj" />
+</Project>

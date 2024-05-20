@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <Import Project="..\MSBuild/properties.common.csproj" />
+  <Import Project="$(MSBuildPath)\print.vars.csproj" />
+  <Import Project="$(MSBuildPath)\process.properties.csproj" />
+  <Import Project="$(MSBuildPath)\process.references.csproj" />
+  
+  <ItemGroup>
+    <None Include="MSBuild/**/*" />
+  </ItemGroup>
+ 
+  
+  <ItemGroup>
+    <Compile Update="IBotBobPluginLogger.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="BotBobPluginLogger.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="IBotBobPluginLogger.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="BotBobPluginConfig.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,11 @@
+{
+  "Id": "CopySettingsTool.CopySettingsTool",
+  "Type": "CopySettingsTool.CopySettingsTool",
+  "Order": 100,
+  "Icon": "Sprites/Goods/GearIcon",
+  "NameLocKey": "CopySettingsTool.CopySettingsTool.Title",
+  "DescriptionLocKey": "CopySettingsTool.CopySettingsTool.Description",
+  "ToolInformation": {
+    "BottomBarSection": 0
+  }
+}

@@ -1,0 +1,27 @@
+<Project>
+  <Target Name="PrintVars">
+    <Message Text="--- ||| PrintVars ||| ---" />
+    <Message Text="--- ||| MSBuildProperties:" />
+    <Message Text="--- ||| '%(MsBuildProperty.Name)' =&gt; '%(MsBuildProperty.Identity)'" />
+    <Message Text="--- |||" />
+    <Message Text="--- ||| Properties:" />
+    <Message Text="--- ||| '%(Property.Name)' =&gt; '%(Property.Identity)'" />
+    <Message Text="--- ||| --------- ||| ---" />
+    <CallTarget Targets="PrintModVars" />
+  </Target>
+
+  <Target Name="PrintModVars" Condition="'@(ModProperty)' != ''">   
+    <Message Text="--- ||| PrintModVars ||| ---" />
+    <Message Text="--- ||| ModProperty:" />
+    <Message Text="--- ||| '%(ModProperty.Name)' =&gt; '%(ModProperty.Identity)'" />
+    <Message Text="--- ||| --------- ||| ---" />
+  </Target>
+
+  <Target Name="PrintVarsBeforeBuild" BeforeTargets="BeforeBuild">
+    <MsBuild Projects="$(MSBuildProjectFile)" Targets="PrintVars" Properties="Dummy=1" />
+  </Target>
+
+  <Target Name="PrintVarsAfterBuild" AfterTargets="AfterBuild">
+    <MsBuild Projects="$(MSBuildProjectFile)" Targets="PrintVars" Properties="Dummy=2" />
+  </Target>
+</Project>

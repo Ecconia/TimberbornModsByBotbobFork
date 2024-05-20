@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ModProperty Name="ModName" Include="CopySettingsTool" />
+    <ModProperty Name="ModVersion" Include="1.0.0" />
+    <ModProperty Name="ModUniqueId" Include="botbob.copy.settings.tool" />
+    <ModProperty Name="ModEntryDll" Include="CopySettingsTool.dll" />
+    <ModProperty Name="HasPackage" Include="true" />
+    <ModProperty Name="HasConfig" Include="true" />
+  </ItemGroup>
+
+  <Import Project="..\MSBuild\timberborn.mod.reference.csproj" />
+  <Import Project="..\MSBuild\plugin.csproj" />
+
+  <ItemGroup>
+    <Reference Include="..\TimberbornMods\lib\**\Automation.dll">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,121 @@
+<Project>
+
+	<Target Name="ClearOutputFolders" AfterTargets="AfterBuild" >
+		<Message Text="--- ||| Clearing publish folder: '$(OutputDirectory)\$(AssemblyName)'"/>
+		<ItemGroup>
+			<FilesToDelete Include="$(OutputDirectory)\$(AssemblyName)\**\*"/>
+		</ItemGroup>
+		<Delete Files="@(FilesToDelete)" />
+	</Target>
+
+	<!-- ||| - - -  Create mod structure - - - ||| -->
+
+	<PropertyGroup>
+		<AfterBuildTargets>CopyDLL;CopyPackage;CopyModJson;CopyConfigJson</AfterBuildTargets>
+	</PropertyGroup>
+
+	<!-- .dll -->
+	<Target Name="CopyDLL" AfterTargets="ClearOutputFolders" DependsOnTargets="ClearOutputFolders">
+		<Message Text="--- ||| Copying $(AssemblyName).dll to output dir: '$(OutputDirectory)\$(AssemblyName)'"/>
+		<Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="$(OutputDirectory)\$(AssemblyName)" />
+	</Target>
+
+	<!-- /package -->
+	<Target Name="CopyPackage" AfterTargets="ClearOutputFolders" DependsOnTargets="ClearOutputFolders"
+			Condition="'$(HasPackage)' == 'true'">
+		<Message Text="--- ||| Copying package to output dir: '$(OutputDirectory)\$(AssemblyName)'"/>
+
+		<ItemGroup>
+			<PackageFiles Include="$(MSBuildProjectDirectory)\package\**\*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(OutputDirectory)\$(AssemblyName)\%(RecursiveDir)" SkipUnchangedFiles="false" /> 
+	</Target>
+
+	<!-- mod.json -->
+	<Target Name="CopyModJson" AfterTargets="ClearOutputFolders" DependsOnTargets="ClearOutputFolders">
+		<Message Text="--- ||| Copying mod.json to output dir: '$(OutputDirectory)\$(AssemblyName)'"/>
+
+		<PropertyGroup>
+			<ModJsonContent>
+{
+		"Name": "$(ModName)",
+		"Version": "$(ModVersion)",
+		"UniqueId": "$(ModUniqueId)",
+		"MinimumApiVersion": "0.6.5",
+		"MinimumGameVersion": "0.5.9",
+		"EntryDll": "$(ModEntryDll)"
+}
+			</ModJsonContent>
+		</PropertyGroup>
+		<WriteLinesToFile
+				File="$(OutputDirectory)\$(AssemblyName)\mod.json"
+				Lines="$(ModJsonContent)" />		
+	</Target>
+
+	<!-- config.json -->
+	<Target Name="CopyConfigJson" AfterTargets="ClearOutputFolders" DependsOnTargets="ClearOutputFolders"
+			Condition="'$(HasConfig)' == 'true'">
+		<Message Text="--- ||| Copying config.json to output dir: '$(OutputDirectory)\$(AssemblyName)'"/>
+
+		<PropertyGroup>
+			<ConfigJsonContent>
+{
+	"DebugLogs": $(DefaultConfigJsonDebugLogs)
+}
+			</ConfigJsonContent>
+		</PropertyGroup>
+		<WriteLinesToFile
+				File="$(OutputDirectory)\$(AssemblyName)\configs\config.json"
+				Lines="$(ConfigJsonContent)" />		
+	</Target>
+
+	<!-- ||| - - -  Output finished - - - ||| -->
+
+	<!-- copy mod to game -->
+	<Target Name="CopyToGame" AfterTargets="$(AfterBuildTargets)" DependsOnTargets="$(AfterBuildTargets)"
+			Condition="'$(CopyToGame)' == 'true' And '$(GamePluginDirectory)' != ''">
+		<Message Text="--- ||| Clearing game folder: '$(GamePluginDirectory)\$(AssemblyName)\*'"/>
+		<ItemGroup>
+			<FilesToDelete2 Include="$(GamePluginDirectory)\$(AssemblyName)\**\*"/>
+		</ItemGroup>
+		<Delete Files="@(FilesToDelete2)" />
+
+		<Message Text="--- ||| Copying '$(OutputDirectory)\$(AssemblyName)\**\*' to game dir: '$(GamePluginDirectory)\$(AssemblyName)'"/>
+		<ItemGroup>
+			<PackageFiles2 Include="$(OutputDirectory)\$(AssemblyName)\**\*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PackageFiles2)" DestinationFolder="$(GamePluginDirectory)\$(AssemblyName)\%(RecursiveDir)" SkipUnchangedFiles="false" /> 
+	</Target>
+	
+	<!-- copy mod to game - modmanager folders -->
+	<Target Name="CopyToGameModManager" AfterTargets="$(AfterBuildTargets)" DependsOnTargets="$(AfterBuildTargets)"
+			Condition="'$(CopyToGameModManager)' == 'true' And '$(GameModDirectory)' != ''">
+		<Message Text="--- ||| Clearing game folder: '$(GameModDirectory)\$(AssemblyName)\*'"/>
+		<ItemGroup>
+			<FilesToDelete2 Include="$(GameModDirectory)\$(AssemblyName)\**\*"/>
+		</ItemGroup>
+		<Delete Files="@(FilesToDelete2)" />
+
+		<Message Text="--- ||| Copying '$(GameModDirectory)\$(AssemblyName)\**\*' to game dir: '$(GameModDirectory)\$(AssemblyName)'"/>
+		<ItemGroup>
+			<PackageFiles2 Include="$(OutputDirectory)\$(AssemblyName)\**\*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PackageFiles2)" DestinationFolder="$(GameModDirectory)\$(AssemblyName)\%(RecursiveDir)" SkipUnchangedFiles="false" /> 
+	</Target>
+
+	<!-- zip up the output folder -->
+	<Target Name="Zip" AfterTargets="$(AfterBuildTargets)" DependsOnTargets="$(AfterBuildTargets)">
+		<ItemGroup>
+			<ZippedFilesToDelete Include="$(ZippedOutputDirectory)\$(AssemblyName)*"/>
+		</ItemGroup>
+		<Message Text="--- ||| Clearing zipped folder: -> '@(ZippedFilesToDelete)'"/>
+		<Delete Files="@(ZippedFilesToDelete)" />
+		
+		<Message Text="--- ||| Zip to $(ZippedOutputDirectory)\$(AssemblyName)"/>
+			<ItemGroup>
+				<ZipFiles Include="$(OutputDirectory)\$(AssemblyName)" />
+			</ItemGroup>
+		<Exec Command="PowerShell -command Compress-Archive @(ZipFiles, ',') $(ZippedOutputDirectory)\$(AssemblyName).zip" />
+	</Target>
+
+</Project>

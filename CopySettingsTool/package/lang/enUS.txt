@@ -1,0 +1,3 @@
+﻿ID,Text
+CopySettingsTool.CopySettingsTool.Title,"Copy Settings Tool",
+CopySettingsTool.CopySettingsTool.Description,"Hold ALT and click a building to save it, then drag over buildings you want to apply the settings to."

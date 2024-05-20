@@ -1,0 +1,8 @@
+<Project>
+  <ItemGroup>
+    <ProjectReference Include="..\TimberbornMods\TimberbornMods.csproj" ReferenceOutputAssembly="False">
+      <Private>False</Private>
+    </ProjectReference>
+    <Compile Include="..\TimberbornMods\*.cs" Link="BotBobPlugin.cs" />
+  </ItemGroup>
+</Project>

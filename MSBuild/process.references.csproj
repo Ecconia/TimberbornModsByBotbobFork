@@ -1,0 +1,22 @@
+<Project>
+  <Target Name="SetDependancies" BeforeTargets="ResolveAssemblyReferences" DependsOnTargets="SetProperties">
+    <Message Text="--- ||| Setting dependancies based on: $(LibPath)" />
+    <ItemGroup>
+      <Reference Include="$(LibPath)\**\System.Collections.Immutable.dll">
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="$(LibPath)\**\TimberApi*.dll">
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="$(LibPath)\timberborn\Timberborn*.dll">
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="$(LibPath)\**\Unity*.dll">
+        <Private>False</Private>
+      </Reference>
+      <Reference Include="$(LibPath)\**\Bindito*.dll">
+        <Private>False</Private>
+      </Reference>
+    </ItemGroup>
+  </Target>
+</Project>

@@ -1,0 +1,31 @@
+<Project>
+  <Target Name="SetProperties" BeforeTargets="ResolveAssemblyReferences">
+    <CreateProperty Value="@(Property)">
+      <Output TaskParameter="Value" PropertyName="%(Name)" />
+    </CreateProperty>
+    <Message Text="--- ||| '%(Property.Name)' =&gt; '%(Property.Identity)'" />
+    <CallTarget Targets="SetModProperties" />
+  </Target>
+
+  <Target Name="SetModProperties" Condition="'@(ModProperty)' != ''">
+    <CreateProperty Value="@(ModProperty)">
+      <Output TaskParameter="Value" PropertyName="%(Name)" />
+    </CreateProperty>
+    <Message Text="--- ||| '%(ModProperty.Name)' =&gt; '%(ModProperty.Identity)'" />
+
+    <Message Text="--- ||| Didn't set assembly version, ModVersion is not set: '$(ModVersion)'"
+             Condition="'$(ModVersion)' == ''"/>
+
+    <Message Text="--- ||| Didn't set game mod plugin directory, assembly name: '$(AssemblyName)'"
+             Condition="'$(PluginPluginDirectory)' == ''"/>
+  </Target>
+
+  <Target Name="SetAssemblyInfo" AfterTargets="SetModProperties" Condition="'$(ModVersion)' != ''">
+    <Message Text="--- ||| Setting assembly version to: '$(ModVersion)'" />
+    <PropertyGroup>
+      <Version>$(ModVersion)</Version>
+      <AssemblyVersion>$(ModVersion)</AssemblyVersion>
+    </PropertyGroup>
+  </Target>
+  
+</Project>

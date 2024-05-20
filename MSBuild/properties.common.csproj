@@ -1,0 +1,23 @@
+<Project>
+
+  <PropertyGroup>
+    <MSBuildPath>..\MSBuild</MSBuildPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MsBuildProperty Name="StartupDirectory" Include="$(MSBuildStartupDirectory)" />
+    <MsBuildProperty Name="ProjectDirectory" Include="$(MSBuildProjectDirectory)" />
+    <MsBuildProperty Name="VersionMSBuild" Include="$(MSBuildVersion)" />
+    <MsBuildProperty Name="VersionMSBuildRuntime" Include="$(MSBuildRuntimeVersion)" />
+    <MsBuildProperty Name="MSBuildProjectFile" Include="$(MSBuildProjectFile))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Property Name="ZippedOutputDirectory" Include="..\zipped" />
+    <Property Name="OutputDirectory" Include="..\unzipped" />
+    <Property Name="LibPath" Include="..\lib" />
+    <Property Name="MSBuildPath" Include="$(MSBuildPath)" />
+    <Property Name="DefaultConfigJsonDebugLogs" Include="false" />
+  </ItemGroup>
+
+</Project>
