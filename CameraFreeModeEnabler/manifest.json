@@ -1,0 +1,8 @@
+{
+  "Name": "Camera Free Mode Enabler Ecconia Update",
+  "Version": "1.0.1",
+  "Id": "CameraFreeModeEnablerEcconiaUpdate",
+  "MinimumGameVersion": "0.7.0.0",
+  "Description": "Will enable the free camera mode allowing infinite zoom out levels and free rotation.",
+  "RequiredMods": []
+}

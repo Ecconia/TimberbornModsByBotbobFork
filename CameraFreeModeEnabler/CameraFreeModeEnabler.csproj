@@ -3,19 +3,24 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
-    <ModProperty Name="ModName" Include="CameraFreeModEnabler" />
-    <ModProperty Name="ModVersion" Include="1.0.0" />
-    <ModProperty Name="ModUniqueId" Include="botbob.camera.free.mode.enabler" />
-    <ModProperty Name="ModEntryDll" Include="CameraFreeModeEnabler.dll" />
-    <ModProperty Name="HasPackage" Include="true" />
-    <ModProperty Name="HasConfig" Include="true" />
+    <PackageReference Include="UnityEngine.Modules" Version="2022.1.24" IncludeAssets="compile"/>
   </ItemGroup>
 
-  <Import Project="..\MSBuild\timberborn.mod.reference.csproj" />
-
-  <Import Project="..\MSBuild\plugin.csproj" />
+  <ItemGroup>
+    <Reference Include="Bindito.Core">
+      <HintPath>..\Timberborn\Bindito.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Timberborn.CameraSystem">
+      <HintPath>..\Timberborn\Timberborn.CameraSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Timberborn.ModManagerScene">
+      <HintPath>..\Timberborn\Timberborn.ModManagerScene.dll</HintPath>
+    </Reference>
+    <Reference Include="Timberborn.SingletonSystem">
+      <HintPath>..\Timberborn\Timberborn.SingletonSystem.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
