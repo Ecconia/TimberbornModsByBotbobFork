@@ -9,7 +9,7 @@ using Timberborn.SingletonSystem;
 
 public class CameraFreeModeEnabler : IModStarter
 {
-	public void StartMod()
+	public void StartMod(IModEnvironment modEnvironment)
 	{
 	}
 }
